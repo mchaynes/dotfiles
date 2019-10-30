@@ -1,0 +1,8 @@
+[alias]
+	co = checkout
+	st = status
+[user]
+	name = Myles Haynes
+	email = myleschaynes@gmail.com
+[url "git@github.com:"]
+	insteadOf = https://github.com/
