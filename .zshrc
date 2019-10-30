@@ -50,7 +50,7 @@ watch() {
 # would print "12". Used nicely in conjunction with kubectl logs <pod_name> | grep 'some search term' | extract some_field
 extract() {
   while read data; do
-    echo $data | grep -Eo "$1=.+\w" | awk -F'=' '{print $2}' | awk '{print $1}'
+    echo $data | grep -Eo "$1=\"?.+\"?" | awk -F'=' '{print $2}' | sed -e 's/\(.*\) .*$/\1/g' -e 's/"//g'  
   done
 }
 
