@@ -46,6 +46,8 @@ extract() {
   done
 }
 
+export SECRET_TO_ENV='{{ range $key, $value := .data }}{{printf "%s=%s\n" $key  ($value | base64decode) }}{{ end }}'
+
 # Takes the average of the input strings, delimited by newlines. Used nicely in conjunction with `extract` above for adhoc analysis on logs 
 avg() {
     d=""
