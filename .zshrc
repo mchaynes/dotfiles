@@ -5,7 +5,8 @@ export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
 source ~/.creds/niagara
 alias dc='docker-compose'
-
+alias pip=pip3
+alias python=python3
 # Used to make adding stuff to my dotfiles repo easier. Stolen from: https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
@@ -33,16 +34,7 @@ alias b='bookmark'
 alias sauce='source ~/.zshrc'
 alias esauce='vim ~/.zshrc'
 
-# Runs a command every $1 seconds, clearing the prompt. Nice for watching files grow, etc
-watch() {
-  time=$1
-  shift
-  while true; do 
-    clear
-    eval $@
-    sleep $time 
-  done
-}
+
 
 # Extracts data from log files that follow the convention of `level=info message="the message" some_field=some_value`
 # For example: 
