@@ -4,6 +4,8 @@ export ZSH="$HOME/.oh-my-zsh"
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
 source ~/.creds/niagara
+alias vi=nvim
+alias vim=nvim
 alias dc='docker-compose'
 alias pip=pip3
 alias python=python3
