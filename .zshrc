@@ -3,12 +3,16 @@
 export ZSH="$HOME/.oh-my-zsh"
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/binutils/bin:$PATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 source ~/.creds/niagara
 alias vi=nvim
 alias vim=nvim
 alias dc='docker-compose'
 alias pip=pip3
 alias python=python3
+alias gs=gsutil
 # Used to make adding stuff to my dotfiles repo easier. Stolen from: https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
@@ -30,13 +34,11 @@ alias kns='kubens'
 
 # Navigation
 alias j='jump'
-alias b='bookmark'
+alias b='bookmark && load-bookmarks'
 
 # Make it way easier to edit and load this file. `esauce && sauce`
 alias sauce='source ~/.zshrc'
 alias esauce='vim ~/.zshrc'
-
-
 
 # Extracts data from log files that follow the convention of `level=info message="the message" some_field=some_value`
 # For example: 
@@ -47,6 +49,14 @@ extract() {
     echo $data | grep -Eo "$1=\"?.+\"?" | awk -F'=' '{print $2}' | sed -e 's/\(.*\) .*$/\1/g' -e 's/"//g'  
   done
 }
+
+load-bookmarks() {
+  while read data; do
+    export $(echo $data | awk -F'|' '{print $2}')=$(echo $data | awk -F'|' '{print $1}' | sed -e $(printf 's\$HOME\%s\' "$HOME"))
+  done < $HOME/.bookmarks
+}
+# Call the function during startup
+#load-bookmarks
 
 export SECRET_TO_ENV='{{ range $key, $value := .data }}{{printf "%s=%s\n" $key  ($value | base64decode) }}{{ end }}'
 
@@ -67,6 +77,14 @@ niagara-pod() {
 # prints out the logs for niagara
 nlogs() {
   kubectl logs -n default $(niagara-pod) $@
+}
+
+thermos() {
+  psql -h "$THERMOS_HOST" -U "$THERMOS_USER" -d "$THERMOS_DB"
+}
+
+property() {
+  psql -h "$PROPERTY_HOST" -U postgres
 }
 
 
